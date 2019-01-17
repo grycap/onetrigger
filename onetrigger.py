@@ -19,7 +19,7 @@ import requests
 LOGGING_FORMAT = '%(asctime)s - %(levelname)s - %(message)s'
 CONNECTION_RETRIES = 3
 TIMEOUT = 10
-WAIT_SECONDS = 5
+WAIT_SECONDS = 10
 CHANGES_PATH = '/api/v3/oneprovider/changes/metadata/'
 SPACES_PATH = '/api/v3/oneprovider/spaces/'
 FILES_PATH = '/api/v3/oneprovider/files/'
@@ -156,6 +156,9 @@ while attempts < CONNECTION_RETRIES:
                 if r.status_code == 200:
                     path_items = r.json()
                     for item in path_items:
+                        if item['id'] in files:
+                            new_files.append(item['id'])
+                            continue
                         attributes_url = 'https://{0}{1}{2}'.format(settings.host, ATTRIBUTES_PATH, item['path'].lstrip('/'))
                         r = requests.get(attributes_url, headers=header, verify=not settings.insecure)
                         if r.status_code == 200:
@@ -171,11 +174,13 @@ while attempts < CONNECTION_RETRIES:
                             raise Exception  
                 else:
                     raise Exception
+            attempts = 0
             files = new_files
+            #logging.info('Connected - {0} files'.format(len(files)))
             initialized = True
             time.sleep(TIMEOUT)
     except Exception:
-        pass
+        logging.warning('Connection lost. Retrying...')
     attempts += 1
     time.sleep(WAIT_SECONDS)
 logging.error('Connection error')

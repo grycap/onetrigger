@@ -49,5 +49,8 @@ class OneTrigger:
             'list-spaces': self._list_spaces
         }[self._config.command]()
 
-if __name__ == '__main__':
+def main():
     OneTrigger().main()
+
+if __name__ == '__main__':
+    main()

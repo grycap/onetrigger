@@ -14,8 +14,8 @@
 # limitations under the License.
  
 import logging, sys, signal
-from configparser import ConfigParser
-from oneproviderclient import OneproviderClient
+from onetrigger.configparser import ConfigParser
+from onetrigger.oneproviderclient import OneproviderClient
 
 
 class OneTrigger:

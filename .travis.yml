@@ -1,0 +1,22 @@
+language: python
+python:
+  - "3.6"
+
+install:
+  - pip install -U pyinstaller
+  - pip install -U -r requirements.txt
+
+script: pyinstaller --onefile onetrigger/onetrigger.py
+
+deploy:
+  - provider: pypi
+    user: $PYPI_USER
+    password: $PYPI_PASS
+    on:
+      tags: true
+  - provider: releases
+    api_key: $GITHUB_OAUTH_TOKEN
+    file: dist/supervisor
+    skip_cleanup: true
+    on:
+      tags: true

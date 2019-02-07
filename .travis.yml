@@ -6,7 +6,7 @@ install:
   - pip install -U pyinstaller
   - pip install -U -r requirements.txt
 
-script: pyinstaller --onefile faassupervisor/supervisor.py
+script: pyinstaller --onefile onetrigger/onetrigger.py
 
 deploy:
   - provider: pypi

@@ -26,7 +26,7 @@ class ConfigParser:
     def _parse_env_config(self):
         self._env_host = os.environ.get('ONEPROVIDER_HOST')
         self._env_token = os.environ.get('ONEDATA_ACCESS_TOKEN')
-        self._env_space_id = os.environ.get('ONEDATA_SPACE_ID')
+        self._env_space = os.environ.get('ONEDATA_SPACE')
         self._env_webhook = os.environ.get('ONETRIGGER_WEBHOOK')
         self._env_folder = os.environ.get('ONEDATA_SPACE_FOLDER')
         self._env_insecure = json.loads(os.environ.get('ONEPROVIDER_INSECURE').lower()) if 'ONEPROVIDER_INSECURE' in os.environ else False
@@ -41,7 +41,7 @@ class ConfigParser:
         self._parent_parser.add_argument('-t', '--token', action='store', default=self._env_token, dest='token',
                             help='Onedata access token')
         self._parent_parser.add_argument('-i', '--insecure', action='store_true', default=self._env_insecure, dest='insecure',
-                            help='Connect to a provider without a trusted certificate')
+                            help='Connect to a provider without a trusted certificate (Optional)')
 
     def _create_subparsers(self):
         self._subparsers = self._parser.add_subparsers(title='Commands', dest='command', required=True)
@@ -50,8 +50,8 @@ class ConfigParser:
 
     def _create_run_parser(self):
         self._run_parser = self._subparsers.add_parser('run', parents=[self._parent_parser], help='Run OneTrigger')
-        self._run_parser.add_argument('-s', '--space-id', action='store', default=self._env_space_id, dest='space_id',
-                            help='Onedata space ID')
+        self._run_parser.add_argument('-s', '--space', action='store', default=self._env_space, dest='space',
+                            help='Onedata space')
         self._run_parser.add_argument('-w', '--webhook', action='store', default=self._env_webhook, dest='webhook',
                             help='Webhook to send events')
         self._run_parser.add_argument('-f', '--folder', action='store', default=self._env_folder, dest='folder',
@@ -69,8 +69,8 @@ class ConfigParser:
             logging.error('Onedata access token is not provided. Please set it via "--token" argument or "ONEDATA_ACCESS_TOKEN" environment variable')
             required = False
         if config.command == 'run':
-            if config.space_id == None:
-                logging.error('Onedata space ID is not provided. Please set it via "--space-id" argument or "ONEDATA_SPACE_ID" environment variable')
+            if config.space == None:
+                logging.error('Onedata space is not provided. Please set it via "--space" argument or "ONEDATA_SPACE" environment variable')
                 required = False
             if config.webhook == None:
                 logging.error('Webhook to send events is not provided. Please set it via "--webhook" argument or "ONETRIGGER_WEBHOOK" environment variable')

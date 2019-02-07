@@ -31,16 +31,19 @@ class OneproviderClient:
         self._settings = settings
         self._header = {'X-Auth-Token': settings.token}
 
-    def _get_space_name(self):
-        space_url = 'https://{0}{1}{2}'.format(self._settings.host, self.SPACES_PATH, self._settings.space_id)
-        space_name = None
+    def _check_space(self):
+        self._settings.space = self._settings.space.strip('/')
+        space_url = 'https://{0}{1}'.format(self._settings.host, self.SPACES_PATH)
         try:
             r = requests.get(space_url, headers=self._header, verify=not self._settings.insecure)
             if r.status_code == 200:
-                space_name = r.json()['name']
-            elif r.status_code == 404:
-                logging.error('Invalid space ID')
-                sys.exit(1)
+                spaces = r.json()
+                space_names = []
+                for space in spaces:
+                    space_names.append(space['name'])
+                if self._settings.space not in space_names:
+                    logging.error('The space "{0}" does not exist. Please check the available spaces with the "list-spaces" subcommand.'.format(self._settings.space))
+                    sys.exit(1)
             elif r.status_code == 401:
                 logging.error('Invalid token')
                 sys.exit(1)
@@ -49,13 +52,12 @@ class OneproviderClient:
         except Exception:
             logging.error('Error connecting to provider host')
             sys.exit(1)
-        return space_name
 
-    def _check_folder(self, space_name):
+    def _check_folder(self):
         folder = None
         if self._settings.folder != None:
             folder = self._settings.folder.strip('/')
-            folder_url = 'https://{0}{1}{2}/{3}'.format(self._settings.host, self.FILES_PATH, space_name, folder)
+            folder_url = 'https://{0}{1}{2}/{3}'.format(self._settings.host, self.FILES_PATH, self._settings.space, folder)
             try:
                 r = requests.get(folder_url, headers=self._header, verify=not self._settings.insecure)
                 if r.status_code == 404:
@@ -84,18 +86,18 @@ class OneproviderClient:
             logging.error(
                 'Error sending event to {0}'.format(self._settings.webhook))
 
-    def _subscribe(self, space_name, folder):
-        folder_msg = '' if folder == None else '. Listening events on "/{0}/{1}/" folder'.format(space_name, folder)
+    def _subscribe(self, folder):
+        folder_msg = '' if folder == None else '. Listening events on "/{0}/{1}/" folder'.format(self._settings.space, folder)
         files = []
         initialized = False
         attempts = 0
-        logging.info('Subscribing to file events in space "{0}" from provider "{1}"...{2}'.format(space_name, self._settings.host, folder_msg))
+        logging.info('Subscribing to file events in space "{0}" from provider "{1}"...{2}'.format(self._settings.space, self._settings.host, folder_msg))
         while attempts < self.CONNECTION_RETRIES:
             try:
                 while True:
                     # Get all files in folder and subfolders
                     new_files = []
-                    paths = ['{0}/{1}'.format(space_name, folder)] if folder != None else [space_name]
+                    paths = ['{0}/{1}'.format(self._settings.space, folder)] if folder != None else [self._settings.space]
                     for path in paths:
                         files_url = 'https://{0}{1}{2}'.format(self._settings.host, self.FILES_PATH, path)
                         r = requests.get(files_url, headers=self._header, verify=not self._settings.insecure)
@@ -133,9 +135,9 @@ class OneproviderClient:
         sys.exit(1)
 
     def run(self):
-        space_name = self._get_space_name()
-        folder = self._check_folder(space_name)
-        self._subscribe(space_name, folder)
+        self._check_space()
+        folder = self._check_folder()
+        self._subscribe(folder)
 
     def _print_spaces(self, spaces):
         table = []

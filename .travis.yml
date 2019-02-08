@@ -6,17 +6,24 @@ install:
   - pip install -U pyinstaller
   - pip install -U -r requirements.txt
 
-script: pyinstaller --onefile onetrigger/onetrigger.py
-
-deploy:
-  - provider: pypi
-    user: $PYPI_USER
-    password: $PYPI_PASS
-    on:
-      tags: true
-  - provider: releases
-    api_key: $GITHUB_OAUTH_TOKEN
-    file: dist/onetrigger
-    skip_cleanup: true
-    on:
-      tags: true
+jobs:
+  include:
+    - stage: Build binary on releases
+      script: pyinstaller --onefile onetrigger/onetrigger.py
+      if: tag IS present
+    - stage: Deploy releases to github and PyPi
+      deploy:
+        - provider: releases
+          api_key: $GITHUB_OAUTH_TOKEN
+          file: dist/onetrigger
+          skip_cleanup: true
+          on:
+            tags: true
+      deploy:
+        - provider: pypi
+          user: $PYPI_USER
+          password: $PYPI_PASS
+          on:
+            tags: true
+      if: tag IS present
+      

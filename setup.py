@@ -15,9 +15,14 @@
 
 from setuptools import setup, find_namespace_packages
 
+with open('README.md', 'r', 'utf-8') as f:
+    readme = f.read()
+
 setup(name='onetrigger',
       version='1.0.0',
       description='Trigger webhooks by Onedata events',
+      long_description=readme,
+      long_description_content_type="text/markdown",
       url='https://github.com/grycap/onetrigger',
       author='GRyCAP - Universitat Politecnica de Valencia',
       author_email='serisgal@i3m.upv.es',

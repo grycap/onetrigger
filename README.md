@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/grycap/onetrigger.svg?branch=master)](https://travis-ci.org/grycap/onetrigger) [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
-A command-line tool to detect OneData file events in order to trigger a webhook.
+A command-line tool to detect Onedata file events in order to trigger a webhook.
 
 ## Installation
 

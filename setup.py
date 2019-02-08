@@ -19,7 +19,7 @@ with open('README.md', 'r', 'utf-8') as f:
     readme = f.read()
 
 setup(name='onetrigger',
-      version='1.0.0',
+      version='1.0.1',
       description='Trigger webhooks by Onedata events',
       long_description=readme,
       long_description_content_type="text/markdown",

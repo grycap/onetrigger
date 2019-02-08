@@ -29,4 +29,9 @@ setup(name='onetrigger',
               'onetrigger=onetrigger.onetrigger:main'
           ]
       },
+      classifiers=[
+          'Programming Language :: Python :: 3',
+          'License :: OSI Approved :: Apache Software License',
+          'Environment :: Console'
+      ],
       zip_safe=False)

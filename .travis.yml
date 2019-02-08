@@ -8,10 +8,8 @@ install:
 
 jobs:
   include:
-    - stage: Build binary on releases
+    - stage: Build binary and deploy to github on new releases
       script: pyinstaller --onefile onetrigger/onetrigger.py
-      if: tag IS present
-    - stage: Deploy releases to github and PyPi
       deploy:
         - provider: releases
           api_key: $GITHUB_OAUTH_TOKEN
@@ -19,6 +17,8 @@ jobs:
           skip_cleanup: true
           on:
             tags: true
+      if: tag IS present
+    - stage: Deploy to PyPi on new releases
       deploy:
         - provider: pypi
           user: $PYPI_USER

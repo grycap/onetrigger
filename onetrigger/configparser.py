@@ -44,7 +44,8 @@ class ConfigParser:
                             help='Connect to a provider without a trusted certificate (Optional)')
 
     def _create_subparsers(self):
-        self._subparsers = self._parser.add_subparsers(title='Commands', dest='command', required=True)
+        self._subparsers = self._parser.add_subparsers(title='Commands', dest='command')
+        self._subparsers.required = True
         self._create_run_parser()
         self._create_list_spaces_parser()
 

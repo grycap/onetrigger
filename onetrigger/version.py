@@ -13,6 +13,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from onetrigger.version import __version__
-
-__all__ = ['onetrigger', 'oneproviderclient', 'configparser']
+__version__ = '1.0.2'

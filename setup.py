@@ -20,13 +20,14 @@ with open('README.md', mode='r', encoding='utf-8') as f:
     readme = f.read()
 
 # Load version
-exec(open('onetrigger/version.py').read())
+with open('onetrigger/version.py', mode='r', encoding='utf-8') as f:
+    exec(f.read())
 
 setup(name='onetrigger',
       version=__version__,
       description='Trigger webhooks by Onedata events',
       long_description=readme,
-      long_description_content_type="text/markdown",
+      long_description_content_type='text/markdown',
       url='https://github.com/grycap/onetrigger',
       author='GRyCAP - Universitat Politecnica de Valencia',
       author_email='serisgal@i3m.upv.es',

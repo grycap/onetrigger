@@ -15,11 +15,15 @@
 
 from setuptools import setup, find_namespace_packages
 
+# Load readme
 with open('README.md', mode='r', encoding='utf-8') as f:
     readme = f.read()
 
+# Load version
+exec(open('onetrigger/version.py').read())
+
 setup(name='onetrigger',
-      version='1.0.2',
+      version=__version__,
       description='Trigger webhooks by Onedata events',
       long_description=readme,
       long_description_content_type="text/markdown",

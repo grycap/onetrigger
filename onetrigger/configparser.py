@@ -14,6 +14,7 @@
 # limitations under the License.
 
 import os, json, argparse, logging, sys
+from onetrigger.version import __version__
 
 
 class ConfigParser:
@@ -33,6 +34,8 @@ class ConfigParser:
 
     def _create_parser(self):
         self._parser = argparse.ArgumentParser(description='Trigger webhooks by Onedata events')
+        self._parser.add_argument('-v', '--version', action='version', version='version {0}'.format(__version__),
+                            help='show OneTrigger version')
 
         # Parent parser to describe shared arguments
         self._parent_parser = argparse.ArgumentParser(add_help=False)
@@ -59,7 +62,7 @@ class ConfigParser:
                             help='Folder to listen events (Optional)')
 
     def _create_list_spaces_parser(self):
-        self._list_spaces_parser = self._subparsers.add_parser('list-spaces', parents=[self._parent_parser], help='')
+        self._list_spaces_parser = self._subparsers.add_parser('list-spaces', parents=[self._parent_parser], help='List available spaces')
 
     def _check_config(self, config):
         required = True

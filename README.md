@@ -1,6 +1,6 @@
 # OneTrigger
 
-[![Build Status](https://travis-ci.org/grycap/onetrigger.svg?branch=master)](https://travis-ci.org/grycap/onetrigger) [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+[![Build Status](https://travis-ci.org/grycap/onetrigger.svg?branch=master)](https://travis-ci.org/grycap/onetrigger) [![PyPi version](https://img.shields.io/pypi/v/onetrigger.svg)](https://pypi.org/project/onetrigger/) [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
 A command-line tool to detect Onedata file events in order to trigger a webhook.
 
@@ -49,7 +49,7 @@ List your available spaces in Oneprovider.
 onetrigger run -H example.com -t xxxxx -s my-onedata-space -w http://example.com/webhook -f my-folder
 ```
 
-#### Deploy on kubernetes
+#### Deploy on Kubernetes
 
 OneTrigger can be deployed on Kubernetes using our public Docker Hub image [grycap/onetrigger](https://hub.docker.com/r/grycap/onetrigger) by applying a YAML file like this:
 

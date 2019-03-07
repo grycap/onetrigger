@@ -1,6 +1,6 @@
 # OneTrigger
 
-[![Build Status](https://travis-ci.org/grycap/onetrigger.svg?branch=master)](https://travis-ci.org/grycap/onetrigger) [![PyPi version](https://img.shields.io/pypi/v/onetrigger.svg)](https://pypi.org/project/onetrigger/) [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+[![Docker Build Status](https://img.shields.io/docker/cloud/build/grycap/onetrigger.svg)](https://hub.docker.com/r/grycap/onetrigger/) [![Build Status](https://travis-ci.org/grycap/onetrigger.svg?branch=master)](https://travis-ci.org/grycap/onetrigger) [![PyPi version](https://img.shields.io/pypi/v/onetrigger.svg)](https://pypi.org/project/onetrigger/) [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
 A command-line tool to detect Onedata file events in order to trigger a webhook.
 

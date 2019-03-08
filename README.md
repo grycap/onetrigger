@@ -84,10 +84,14 @@ When a new file is created inside the space (or the specified folder) a JSON for
 
 ```json
 {
-    "id": "0000034500046EE9C67756964233836666330363031303664303964623739666562393165336632306232613736236664323861626330656664643566313938313333336633356232333838623137",
-    "file": "file.txt",
-    "path": "/my-onedata-space/files/file.txt",
-    "eventSource": "OneTrigger",
-    "eventTime": "2019-02-07T09:51:04.347823"
+    "Key": "/my-onedata-space/files/file.txt",
+    "Records": [
+        {
+            "objectKey": "file.txt",
+            "objectId": "0000034500046EE9C67756964233836666330363031303664303964623739666562393165336632306232613736236664323861626330656664643566313938313333336633356232333838623137",
+            "eventTime": "2019-02-07T09:51:04.347823",
+            "eventSource": "OneTrigger"
+        }
+    ]
 }
 ```

@@ -72,11 +72,15 @@ class OneproviderClient:
 
     def _post_event(self, file_id, file_path):
         event = {
-            'id': file_id,
-            'file': os.path.basename(file_path),
-            'path': file_path,
-            'eventSource': 'OneTrigger',
-            'eventTime': datetime.datetime.utcnow().isoformat()
+            'Key': file_path,
+            'Records': [
+                {
+                    'objectKey': os.path.basename(file_path),
+                    'objectId': file_id,
+                    'eventTime': datetime.datetime.utcnow().isoformat(),
+                    'eventSource': 'OneTrigger'
+                }
+            ]
         }
         try:
             r = requests.post(self._settings.webhook, json=event)

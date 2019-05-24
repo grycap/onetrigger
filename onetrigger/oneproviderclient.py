@@ -85,7 +85,7 @@ class OneproviderClient:
         try:
             r = requests.post(self._settings.webhook, json=event)
             logging.info('File "{0}" uploaded. Event sent to {1} - {2}'.format(
-                event['file'], self._settings.webhook, r.status_code))
+                event['Records'][0]['objectKey'], self._settings.webhook, r.status_code))
         except Exception:
             logging.error(
                 'Error sending event to {0}'.format(self._settings.webhook))
